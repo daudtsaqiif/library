@@ -66,7 +66,7 @@ class BookController extends Controller
 
             return redirect()->route('book.index')->with('success', 'book has been add');
         } catch (Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return redirect()->back()->with('error', 'cant add book');
         }
     }
@@ -134,7 +134,7 @@ class BookController extends Controller
             return redirect()->route('book.index')->with('success', 'book has been Update');
 
         } catch (Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
                 return redirect()->back()->with('error', 'cant update book');
         }
 
