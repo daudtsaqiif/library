@@ -114,7 +114,7 @@ class BookController extends Controller
             $data = $request->all();
 
             if (!$request->file('image') == '') {
-                Storage::disk('local')->delete('public/book/' . basename($book->image));
+            Storage::disk('local')->delete('public/book/' . basename($book->image));
 
                 $image = $request->file('image');
                 $image->storeAs('public/book', $image->hashName());
@@ -123,7 +123,7 @@ class BookController extends Controller
 
             }
             if (!$request->file('pdf') == '') {
-                Storage::disk('local')->delete('public/pdf/' . basename($book->pdf));
+            Storage::disk('local')->delete('public/pdf/' . basename($book->pdf));
 
                 $pdf = $request->file('pdf');
                 $pdf->storeAs('public/pdf', $pdf->hashName());
