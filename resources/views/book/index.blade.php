@@ -13,10 +13,20 @@
                 <div class="card" style="width: 18rem;">
                     <img src="{{ url('/storage/book', $row->image) }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $row->title }}</h5>
-                        <p class="card-text">{{ $row->category->name }}</p>
+                        <h5 class="card-title">Judul: {{ $row->title }}</h5>
+                        <p class="card-text">Author: {{ $row->author }}</p>
+                        <p class="card-text">Publishing: {{ $row->publishing}}</p>
+                        <p class="card-text">Category: {{ $row->category->name }}</p>
+                        <p class="card-text">Place: {{ $row->place->name }}</p>
+                        <p class="card-text">ISBN: {{ $row->isbn }}</p>
                         
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <a href="{{ url('/storage/pdf', $row->pdf) }}" class="btn btn-primary">Go PDF</a>
+
+                        <a href="{{ route('book.edit', $row->id) }}" class="btn btn-primary m-2">
+                            Edit Product
+                            <i class="bi bi-plus"></i>
+                        </a>
+
                         <form action="{{ route('category.destroy', $row->id) }}" method="post" class="d-inline">
                             @csrf
                             @method('DELETE')

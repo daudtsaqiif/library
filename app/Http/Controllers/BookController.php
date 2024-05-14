@@ -108,41 +108,36 @@ class BookController extends Controller
             'image' => 'image|mimes:jpg,png,jpeg',
             'pdf' => 'mimes:pdf'
         ]);
+
         try {
-
             $book = book::find($id);
+            $data = $request->all();
 
-            if ($request->file('image') == '') {
-
-                Storage::disk('local')->delete('public/pdf/' . basename($book->pdf));
-
-                $pdf = $request->file('pdf');
-                $pdf->storeAs('public/pdf', $pdf->hashName());
-
-                $data = $request->all();
-                $data['pdf'] = $pdf->hashName();
-
-                $book->update($data);
-            } elseif ($request->file('pdf') == '') {
+            if (!$request->file('image') == '') {
                 Storage::disk('local')->delete('public/book/' . basename($book->image));
 
                 $image = $request->file('image');
                 $image->storeAs('public/book', $image->hashName());
 
-            $data = $request->all();
-            $data['image'] = $image->hashName();
+                $data['image'] = $image->hashName();
 
-            $book->update($data);
-            } else{
-                $data = $request->all();
-                $book->update($data);
             }
+            if (!$request->file('pdf') == '') {
+                Storage::disk('local')->delete('public/pdf/' . basename($book->pdf));
 
-            return redirect()->back()->with('success', 'Category has been add');
+                $pdf = $request->file('pdf');
+                $pdf->storeAs('public/pdf', $pdf->hashName());
+
+                $data['pdf'] = $pdf->hashName();
+            }
+            $book->update($data);
+            return redirect()->route('book.index')->with('success', 'book has been Update');
+
         } catch (Exception $e) {
             dd($e->getMessage());
-            return redirect()->back()->with('error', 'cant add book');
+                return redirect()->back()->with('error', 'cant update book');
         }
+
     }
 
     /**
@@ -151,6 +146,20 @@ class BookController extends Controller
     public function destroy(string $id)
     {
         //
+        try {
+            //find category
+            $book = book::find($id);
 
+            //delete image
+            Storage::disk('local')->delete('public/book/' . basename($book->image));
+            Storage::disk('local')->delete('public/pdf/' . basename($book->pdf));
+
+
+            $book->delete();
+
+            return redirect()->back()->with('success', 'deleted the book');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Failed to delete the book');
+        }
     }
 }

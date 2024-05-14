@@ -24,7 +24,7 @@ class book extends Model
         return $this->belongsTo(category::class);
     }
     
-    public function book(){
-        return $this->belongsTo(book::class);
+    public function place(){
+        return $this->belongsTo(place::class);
     }
 }
