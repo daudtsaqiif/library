@@ -64,7 +64,7 @@ class BookController extends Controller
 
             book::create($data);
 
-            return redirect()->back()->with('success', 'Category has been add');
+            return redirect()->route('book.index')->with('success', 'book has been add');
         } catch (Exception $e) {
             dd($e->getMessage());
             return redirect()->back()->with('error', 'cant add book');
