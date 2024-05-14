@@ -27,7 +27,7 @@
                             <i class="bi bi-plus"></i>
                         </a>
 
-                        <form action="{{ route('category.destroy', $row->id) }}" method="post" class="d-inline">
+                        <form action="{{ route('book.destroy', $row->id) }}" method="post" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger" type="submit">
