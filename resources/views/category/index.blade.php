@@ -15,6 +15,7 @@
         <tr>
             <th>No</th>
             <th>Name Category</th>
+            <th>Place</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -23,6 +24,7 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $row->name }}</td>
+                <td class="card-text">Place: {{ $row->place->name }}</td>
                 <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#editModalCategory{{ $row->id }}">
                         Edit
                     </button>

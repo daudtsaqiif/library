@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\category;
 use Exception;
+use App\Models\place;
+use App\Models\category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,7 +16,8 @@ class CategoryController extends Controller
     {
         //
         $category = category::all();
-        return view('category.index', compact('category'));
+        $place = place::all();
+        return view('category.index', compact('category', 'place'));
     }
 
     /**
@@ -34,10 +36,12 @@ class CategoryController extends Controller
         //
         try {
             category::create([
+                'place_id' => $request->place_id,
                 'name' =>$request->name
             ]);
             return redirect()->back()->with('success', 'Category has been add');
         } catch (Exception $e) {
+            dd($e->getMessage());
             return redirect()->back()->with('error', 'the name category is same like before');
         }
         
@@ -66,10 +70,10 @@ class CategoryController extends Controller
     {
         //
         try {
-            $category = category::find($id);
-            
+            $category = category::find($id); 
             
             $category->update([
+                'place_id' => $request->place_id,
                 'name' =>$request->name
             ]);
             return redirect()->back()->with('success', 'Category has change');

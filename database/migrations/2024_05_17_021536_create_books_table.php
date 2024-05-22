@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\book;
-use App\Models\category;
-use App\Models\place;
+use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,15 +14,11 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(category::class)->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignIdFor(place::class)->references('id')->on('places')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignIdFor(Category::class)->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');
-            $table->string('author');
-            $table->string('edition');
-            $table->string('publishing');
+            $table->string('quantitiy');
             $table->string('isbn')->unique();
             $table->string('image');
-            $table->string('pdf');
             $table->timestamps();
         });
     }

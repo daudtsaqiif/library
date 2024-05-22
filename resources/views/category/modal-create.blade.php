@@ -11,7 +11,19 @@
                 <div class="modal-body">
                     <div class="col-12">
                         <label for="categoryName" class="form-label">Category Name</label>
-                        <input type="text" class="form-control" id="categoryName" name="name" value="{{ old('name') }}">
+                        <input type="text" class="form-control" id="categoryName" name="name"
+                            value="{{ old('name') }}">
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="col col-form-label">Select</label>
+                    <div class="col ">
+                        <select class="form-select" aria-label="Default select example" name="place_id">
+                            <option selected>===== Choose place =====</option>
+                            @foreach ($place as $row)
+                                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -22,5 +34,3 @@
         </div>
     </div>
 </div>
-
-

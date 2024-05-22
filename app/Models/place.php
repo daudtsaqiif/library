@@ -12,7 +12,7 @@ class place extends Model
         'name'
     ];
 
-    public function book(){
-        return $this->hasMany(book::class);
+    public function category(){
+        return $this->hasMany(Category::class);
     }
 }

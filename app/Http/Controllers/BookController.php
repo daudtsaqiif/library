@@ -28,8 +28,7 @@ class BookController extends Controller
     {
         //
         $category = category::all();
-        $place = place::all();
-        return view('book.create', compact('category', 'place'));
+        return view('book.create', compact('category'));
     }
 
     /**
@@ -40,14 +39,9 @@ class BookController extends Controller
         //
         $request->validate([
             'category_id' => 'required',
-            'place_id' => 'required',
             'title' => 'required',
-            'author' => 'required',
-            'edition' => 'required',
-            'publishing' => 'required',
-            'isbn' => 'required',
+            'quantitiy' => 'required',
             'image' => 'required|image|mimes:jpg,png,jpeg',
-            'pdf' => 'required|mimes:pdf'
         ]);
         try {
 
@@ -56,11 +50,7 @@ class BookController extends Controller
             $image = $request->file('image');
             $image->storeAs('public/book', $image->hashName());
 
-            $pdf = $request->file('pdf');
-            $pdf->storeAs('public/pdf', $pdf->hashName());
-
             $data['image'] = $image->hashName();
-            $data['pdf'] = $pdf->hashName();
 
             book::create($data);
 
@@ -86,9 +76,9 @@ class BookController extends Controller
     {
         //
         $category = category::all();
-        $place = place::all();
+        
         $book = book::find($id);
-        return view('book.edit', compact('category', 'place', 'book'));
+        return view('book.edit', compact('category', 'book'));
     }
 
     /**
@@ -99,14 +89,10 @@ class BookController extends Controller
         //
         $request->validate([
             'category_id' => 'required',
-            'place_id' => 'required',
             'title' => 'required',
-            'author' => 'required',
-            'edition' => 'required',
-            'publishing' => 'required',
+            'quantitiy' => 'required',
             'isbn' => 'required',
             'image' => 'image|mimes:jpg,png,jpeg',
-            'pdf' => 'mimes:pdf'
         ]);
 
         try {
@@ -121,14 +107,6 @@ class BookController extends Controller
 
                 $data['image'] = $image->hashName();
 
-            }
-            if (!$request->file('pdf') == '') {
-            Storage::disk('local')->delete('public/pdf/' . basename($book->pdf));
-
-                $pdf = $request->file('pdf');
-                $pdf->storeAs('public/pdf', $pdf->hashName());
-
-                $data['pdf'] = $pdf->hashName();
             }
             $book->update($data);
             return redirect()->route('book.index')->with('success', 'book has been Update');
@@ -152,8 +130,6 @@ class BookController extends Controller
 
             //delete image
             Storage::disk('local')->delete('public/book/' . basename($book->image));
-            Storage::disk('local')->delete('public/pdf/' . basename($book->pdf));
-
 
             $book->delete();
 
